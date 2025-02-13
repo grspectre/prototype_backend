@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from app.helper.calculator import evaluate_rpn, shunting_yard, tokenize
 import json
+from app.model.user_request import UserRequest
+import os
 
 
 app = FastAPI()
@@ -61,3 +63,15 @@ async def calc_expression(expr: str):
         "result": result,
     }
     return json.dumps(response, ensure_ascii=True)
+
+
+# homework 2
+@app.post('/api/request/add')
+async def add_request(request: UserRequest):
+    cur_dir = os.path.abspath(os.path.dirname(__file__))
+    path = os.path.join(cur_dir, 'data', 'user_request')
+    new_request_fn = os.path.join(path, "{}.json".format(request.id))
+    with open(new_request_fn, 'w') as fp:
+        fp.write(request.model_dump_json())
+    response = {"request_id": str(request.id)}
+    return json.dumps(response)
