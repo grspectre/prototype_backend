@@ -13,8 +13,8 @@ class RequestReason(str, Enum):
 
 class UserRequest(BaseModel):
     id: UUID = Field(default_factory=uuid4, description="Unique ID")
-    last_name: str = Field(default="LastName", pattern=r"^[A-ZА-ЯЁ][A-zА-яёЁ]+$", description="Client last name")
-    first_name: str = Field(default="User", pattern=r"^[A-ZА-ЯЁ][A-zА-яёЁ]+$", description="Client first name")
+    last_name: str = Field(default="Фамилия", pattern=r"^[А-ЯЁ][А-яёЁ]+$", description="Client last name")
+    first_name: str = Field(default="Имя", pattern=r"^[А-ЯЁ][А-яёЁ]+$", description="Client first name")
     birthday: date = Field(default = date(1970, 1, 1), description="User birthday")
     phone_number: str | None = Field(default=None, pattern=r"\d{10,15}", description="User phone number")
     email: EmailStr | None = Field(default=None, description="User email")
